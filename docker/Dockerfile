@@ -1,4 +1,4 @@
-FROM nvidia/cuda:9.0-devel-ubuntu16.04
+FROM nvcr.io/nvidia/cuda:11.2.1-devel-ubuntu16.04
 
 # Hack to not have tzdata cmdline config during build
 RUN ln -fs /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime
@@ -49,16 +49,16 @@ ENV PATH $PATH:/opt/conda/envs/env/bin:/opt/conda/bin
 
 # installing PVnet dependencies (and removing pvnet again)
 RUN cd /opt && \
-    git clone https://github.com/zju3dv/clean-pvnet.git pvnet && \
+    git clone https://github.com/nickgreene/clean-pvnet.git pvnet && \
     cd pvnet && \
     conda init bash && \
     conda create -n pvnet python=3.7 && \
     . /opt/conda/etc/profile.d/conda.sh && \
     conda activate pvnet && \
-    pip install --user torch==1.1.0 -f https://download.pytorch.org/whl/cu90/stable && \
-    pip install --user Cython==0.28.2 && \
+    pip install torch==1.7.1+cu110 torchvision==0.8.2+cu110 torchaudio===0.7.2 -f https://download.pytorch.org/whl/torch_stable.html
+    pip install Cython==0.28.2 && \
     pip install -r requirements.txt && \
-    pip install --user transforms3d && \
+    pip install transforms3d && \
     cd .. && \
     rm -rf pvnet
 
