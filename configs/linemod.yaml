@@ -13,7 +13,7 @@ train:
     epoch: 240
     milestones: (20, 40, 60, 80, 100, 120, 160, 180, 200, 220)
     gamma: 0.5
-    batch_size: 32
+    batch_size: 16
     dataset: 'LinemodTrain'
     cropresize_rate: 1.0
     rotate_rate: 1.0

@@ -3,14 +3,14 @@
 pvnet_docker() {
   echo "starting pvnet docker"
   xhost +local:docker;
-  docker run -it --rm -d \
+  sudo docker run -it --rm -d \
     --runtime=nvidia \
     --name="pvnet_dev" \
     -v /etc/localtime:/etc/localtime:ro \
     -v /dev/input:/dev/input \
     -v "$HOME/docker_shared:$HOME/docker_shared" \
     -v "$PVNET_GIT:$HOME/pvnet" \
-    --shm-size=4G \
+    --shm-size=8G \
     --workdir $HOME/ \
     --net=host \
     --add-host pvnet_dev:127.0.0.1 \
@@ -28,5 +28,5 @@ pvnet_docker() {
 }
 
 pvnet_docker_attach() {
-  docker exec -it -e "COLUMNS=$COLUMNS" -e "LINES=$LINES" pvnet_dev /bin/bash
+  sudo docker exec -it -e "COLUMNS=$COLUMNS" -e "LINES=$LINES" pvnet_dev /bin/bash
 }
